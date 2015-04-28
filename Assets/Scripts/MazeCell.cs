@@ -4,8 +4,15 @@ using System.Collections;
 public class MazeCell : MonoBehaviour 
 {
 	public IntVector2 coordinates;
+	public MazeRoom room;
 	private int initializedEdgeCount;
 	private MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
+
+	public void Initialize(MazeRoom room)
+	{
+		room.Add(this);
+		transform.GetChild(0).GetComponent<Renderer>().material = room.settings.floorMaterial;
+	}
 
 	public bool IsFullyInitialized
 	{
