@@ -90,7 +90,7 @@ public class Maze : MonoBehaviour
 
 		passage = Instantiate(prefab) as MazePassage;
 
-		if(prefab is MazePassage)
+		if (passage is MazeDoor) 
 		{
 			otherCell.Initialize(CreateRoom(cell.room.settingsIndex));
 		}
