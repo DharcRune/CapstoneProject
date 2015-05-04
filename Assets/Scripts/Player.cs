@@ -3,18 +3,27 @@ using System.Collections;
 
 public class Player : MonoBehaviour 
 {
+	private Camera cam;
+	private float distance;
 	private MazeCell currentCell;
 	private MazeDirection currentDirection;
+	private Vector3 movement;
+
+	public void Start()
+	{
+		distance = 1f;
+		cam = GetComponentInChildren<Camera>();
+	}
 
 	public void SetLocation(MazeCell cell)
 	{
 		currentCell = cell;
-		transform.localPosition = cell.transform.localPosition;
+		transform.localPosition = new Vector3(cell.transform.localPosition.x, 0.5f, cell.transform.localPosition.z);
 	}
 
 	private void Move(MazeDirection direction)
 	{
-		MazeCellEdge edge = currentCell.GetEdge (direction);
+		MazeCellEdge edge = currentCell.GetEdge(direction);
 
 		if(edge is MazePassage)
 		{
@@ -22,37 +31,36 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	private void Rotate(MazeDirection direction)
+	private void Rotate()
 	{
-		transform.localRotation = direction.ToRotation();
-		currentDirection = direction;
+		transform.rotation = Quaternion.Euler(0, Input.mousePosition.x, 0);
+		//transform.localRotation = direction.ToRotation();
+		//currentDirection = direction;
 	}
 
 	private void Update() 
 	{
-		if(Input.GetKeyDown(KeyCode.W))
+		if(Input.GetKey(KeyCode.W))
 		{
-			Move(currentDirection);
+			movement = transform.position + cam.transform.forward * distance * Time.deltaTime;
+			transform.position = new Vector3(movement.x, transform.position.y, movement.z);
 		}
-		else if(Input.GetKeyDown(KeyCode.D))
+		else if(Input.GetKey(KeyCode.D))
 		{
-			Move(currentDirection.GetNextClockwise());
+			movement = transform.position + cam.transform.right * distance * Time.deltaTime;
+			transform.position = new Vector3(movement.x, transform.position.y, movement.z);
 		}
-		else if(Input.GetKeyDown(KeyCode.S))
+		else if(Input.GetKey(KeyCode.S))
 		{
-			Move(currentDirection.GetOpposite());
+			movement = transform.position - cam.transform.forward * distance * Time.deltaTime;
+			transform.position = new Vector3(movement.x, transform.position.y, movement.z);
 		}
-		else if(Input.GetKeyDown(KeyCode.A))
+		else if(Input.GetKey(KeyCode.A))
 		{
-			Move(currentDirection.GetNextCounterclockwise());
+			movement = transform.position - cam.transform.right * distance * Time.deltaTime;
+			transform.position = new Vector3(movement.x, transform.position.y, movement.z);
 		}
-		else if(Input.GetKeyDown(KeyCode.Q))
-		{
-			Rotate(currentDirection.GetNextCounterclockwise());
-		}
-		else if(Input.GetKeyDown(KeyCode.E))
-		{
-			Rotate(currentDirection.GetNextClockwise());
-		}
+
+		Rotate();
 	}
 }

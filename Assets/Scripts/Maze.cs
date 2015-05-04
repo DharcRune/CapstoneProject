@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class Maze : MonoBehaviour
 {
-	public int seedValue;
 	public MazeCell[] cellPrefabs;
 	public IntVector2 size;
 	public MazePassage passagePrefab;
@@ -13,6 +12,7 @@ public class Maze : MonoBehaviour
 	public MazeRoomSettings[] roomSettings;
 	private MazeCell[,] cells;
 	private List<MazeRoom> rooms = new List<MazeRoom>();
+	private int seedValue;
 
 	[Range(0f, 1f)]
 	public float doorProbability;
@@ -22,27 +22,28 @@ public class Maze : MonoBehaviour
 		return cells[coordinates.x, coordinates.z];
 	}
 
-	public void Generate()
+	public void Generate(float heightOfCells, int seedVal, string mazeFloor)
 	{
 		cells = new MazeCell[size.x, size.z];
 
 		List<MazeCell> activeCells = new List<MazeCell>();
-		DoFirstGenerationStep(activeCells);
+		DoFirstGenerationStep(activeCells, heightOfCells, seedVal, mazeFloor);
 
 		while(activeCells.Count > 0)
 		{
-			DoNextGenerationStep(activeCells);
+			DoNextGenerationStep(activeCells, heightOfCells, mazeFloor);
 		}
 	}
 
-	private void DoFirstGenerationStep(List<MazeCell> activeCells)
+	private void DoFirstGenerationStep(List<MazeCell> activeCells, float heightOfCells, int seedVal, string mazeFloor)
 	{
-		MazeCell newCell = CreateCell(RandomCoordinates);
+		setSeed(seedVal);
+		MazeCell newCell = CreateCell(RandomCoordinates, heightOfCells, mazeFloor);
 		newCell.Initialize(CreateRoom(-1));
 		activeCells.Add(newCell);
 	}
 
-	private void DoNextGenerationStep(List<MazeCell> activeCells)
+	private void DoNextGenerationStep(List<MazeCell> activeCells, float heightOfCells, string mazeFloor)
 	{
 		int currentIndex = activeCells.Count - 1;
 		MazeCell currentCell = activeCells[currentIndex];
@@ -62,7 +63,7 @@ public class Maze : MonoBehaviour
 
 			if(neighbor == null)
 			{
-				neighbor = CreateCell(coordinates);
+				neighbor = CreateCell(coordinates, heightOfCells, mazeFloor);
 				CreatePassage(currentCell, neighbor, direction);
 				activeCells.Add(neighbor);
 			}
@@ -123,15 +124,16 @@ public class Maze : MonoBehaviour
 		}
 	}
 
-	private MazeCell CreateCell(IntVector2 coordinates)
+	private MazeCell CreateCell(IntVector2 coordinates, float height, string mazeFloor)
 	{
-		MazeCell newCell = Instantiate(cellPrefabs[Random.Range(0, cellPrefabs.Length)]) as MazeCell;
-		cells [coordinates.x, coordinates.z] = newCell;
+		MazeCell newCell = !GameObject.Find(mazeFloor + "/MazeCell/Stairs2") ? Instantiate(cellPrefabs[Random.Range(0, cellPrefabs.Length)]) as MazeCell : Instantiate (cellPrefabs [Random.Range(0, cellPrefabs.Length - 1)]) as MazeCell;
 
+		cells [coordinates.x, coordinates.z] = newCell;
+		
 		newCell.coordinates = coordinates;
-		newCell.name = "MazeCell " + coordinates.x + ", " + coordinates.z;
+		newCell.name = "MazeCell";
 		newCell.transform.parent = transform;
-		newCell.transform.localPosition = new Vector3 (coordinates.x - size.x * 0.5f + 0.5f, 0f, coordinates.z - size.z * 0.5f + 0.5f);
+		newCell.transform.localPosition = new Vector3 (coordinates.x - size.x * 0.5f + 0.5f, height, coordinates.z - size.z * 0.5f + 0.5f);
 
 		return newCell;
 	}
@@ -150,6 +152,11 @@ public class Maze : MonoBehaviour
 		rooms.Add(newRoom);
 
 		return newRoom;
+	}
+
+	public void setSeed(int seed)
+	{
+		seedValue = seed;
 	}
 
 	public IntVector2 RandomCoordinates

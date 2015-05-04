@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
 	public Maze mazePrefab;
 	public Player playerPrefab;
 	public CameraMovement cameraPrefab;
+	public HudArrow arrowPrefab;
+	public List<int> seeds;
 	private Maze mazeInstance;
+	private Maze mazeInstance2;
 	private Player playerInstance;
 	private IntVector2 playerStartingPosition;
 
@@ -27,7 +31,12 @@ public class GameManager : MonoBehaviour
 	private void BeginGame()
 	{
 		mazeInstance = Instantiate(mazePrefab) as Maze;
-		mazeInstance.Generate();
+		mazeInstance.name = "maze1f";
+		mazeInstance2 = Instantiate(mazePrefab) as Maze;
+		mazeInstance2.name = "maze2f";
+
+		mazeInstance.Generate(0f, seeds[0], mazeInstance.name);
+		mazeInstance2.Generate(10f, seeds[1], mazeInstance2.name);
 
 		playerInstance = Instantiate(playerPrefab) as Player;
 		playerInstance.SetLocation(mazeInstance.GetCell(playerStartingPosition));
@@ -35,6 +44,7 @@ public class GameManager : MonoBehaviour
 		Camera.main.clearFlags = CameraClearFlags.Depth;
 		Camera.main.rect = new Rect(0.81f, 0.67f, 0.35f, 0.35f);
 		cameraPrefab.startCamera();
+		arrowPrefab.startHudArrow();
 	}
 
 	private void RestartGame()

@@ -14,7 +14,6 @@ public class CameraMovement : MonoBehaviour
 	public void startCamera()
 	{
 		// Setting up the reference.
-		//player = GameObject.FindGameObjectWithTag(Tags.Player).transform;
 		player = GameObject.Find("Player(Clone)").transform;
 		
 		// Setting the relative position as the initial relative position of the camera in the scene.
