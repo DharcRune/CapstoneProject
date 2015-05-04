@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 	public Maze mazePrefab;
 	public Player playerPrefab;
 	public CameraMovement cameraPrefab;
-	public HudArrow arrowPrefab;
 	public List<int> seeds;
 	private Maze mazeInstance;
 	private Maze mazeInstance2;
@@ -24,7 +23,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
-			RestartGame();
+
 		}
 	}
 
@@ -44,7 +43,6 @@ public class GameManager : MonoBehaviour
 		Camera.main.clearFlags = CameraClearFlags.Depth;
 		Camera.main.rect = new Rect(0.81f, 0.67f, 0.35f, 0.35f);
 		cameraPrefab.startCamera();
-		arrowPrefab.startHudArrow();
 	}
 
 	private void RestartGame()
