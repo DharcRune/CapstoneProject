@@ -11,11 +11,18 @@ public class CameraMovement : MonoBehaviour
 	}
 	
 	
-	void FixedUpdate ()
+	void FixedUpdate()
 	{
-		float playerX = player.transform.position.x;
-		float playerZ = player.transform.position.z;
-		
-		transform.position = new Vector3(playerX, transform.position.y , playerZ);
+		if (player != null) 
+		{
+			float playerX = player.transform.position.x;
+			float playerZ = player.transform.position.z;
+			
+			transform.position = new Vector3(playerX, transform.position.y, playerZ);
+		} 
+		else
+		{
+			player = GameObject.Find("Player(Clone)").transform;
+		}
 	}
 }

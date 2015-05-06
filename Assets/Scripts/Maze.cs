@@ -126,7 +126,16 @@ public class Maze : MonoBehaviour
 
 	private MazeCell CreateCell(IntVector2 coordinates, float height, string mazeFloor)
 	{
-		MazeCell newCell = !GameObject.Find(mazeFloor + "/MazeCell/Stairs2") ? Instantiate(cellPrefabs[Random.Range(0, cellPrefabs.Length)]) as MazeCell : Instantiate (cellPrefabs [Random.Range(0, cellPrefabs.Length - 1)]) as MazeCell;
+		MazeCell newCell;
+
+		if (transform.name.Equals ("maze1f")) {
+			newCell = !GameObject.Find (mazeFloor + "/MazeCell/Stairs2") ? Instantiate (cellPrefabs [Random.Range (1, cellPrefabs.Length)]) as MazeCell : Instantiate (cellPrefabs[Random.Range (1, cellPrefabs.Length - 1)]) as MazeCell;	
+		} 
+		else 
+		{
+			newCell = !GameObject.Find(mazeFloor + "/MazeCell/Stairs2") ? Instantiate(cellPrefabs[Random.Range(0, cellPrefabs.Length)]) as MazeCell : Instantiate (cellPrefabs [Random.Range(0, cellPrefabs.Length - 1)]) as MazeCell;
+		}
+
 
 		cells [coordinates.x, coordinates.z] = newCell;
 		
