@@ -32,19 +32,23 @@ public class GameManager : MonoBehaviour
 
 	void Update()
 	{	
-		InvokeRepeating("RestartGame", 10.0f, 10.0f);
+		InvokeRepeating("RestartGame", 60.0f, 10.0f);
 	}
 
 	private void BeginGame()
-	{
-		if(seedIndex == seeds.Count - 1)
+	{	
+		mazeInstance.Generate(0f, seeds[seedIndex], mazeInstance.name);
+		Debug.Log(mazeInstance.name + "'s seed: " + seedIndex);
+
+		seedIndex++;
+		if(seedIndex == seeds.Count)
 		{
 			seedIndex = 0;
 		}
 
-		mazeInstance.Generate(0f, seeds[seedIndex], mazeInstance.name);
-		mazeInstance2.Generate(10f, seeds[seedIndex + 1], mazeInstance2.name);
-		
+		mazeInstance2.Generate(10f, seeds[seedIndex], mazeInstance2.name);
+		Debug.Log(mazeInstance2.name + "'s seed: " + seedIndex);
+
 		playerInstance.SetLocation(mazeInstance.GetCell(playerStartingPosition));
 
 		Camera.main.clearFlags = CameraClearFlags.Depth;
@@ -57,7 +61,7 @@ public class GameManager : MonoBehaviour
 		Debug.Log("Its been 10 seconds!");
 		CancelInvoke();
 
-		seedIndex++;
+		//seedIndex++;
 
 		Destroy (mazeInstance.gameObject);
 		Destroy (mazeInstance2.gameObject);

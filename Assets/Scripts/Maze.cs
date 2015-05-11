@@ -128,16 +128,32 @@ public class Maze : MonoBehaviour
 	{
 		MazeCell newCell;
 
-		if (transform.name.Equals ("maze1f")) {
-			newCell = !GameObject.Find (mazeFloor + "/MazeCell/Stairs2") ? Instantiate (cellPrefabs [Random.Range (1, cellPrefabs.Length)]) as MazeCell : Instantiate (cellPrefabs[Random.Range (1, cellPrefabs.Length - 1)]) as MazeCell;	
+		if(transform.name.Equals("maze1f")) 
+		{
+			if(GameObject.Find(transform.name + "/MazeCell/Stairs2") != false)
+			{
+				newCell = Instantiate(cellPrefabs[Random.Range(1, cellPrefabs.Length - 1)]) as MazeCell;
+			}
+			else
+			{
+				newCell = Instantiate(cellPrefabs[cellPrefabs.Length - 1]) as MazeCell;
+			}
 		} 
 		else 
 		{
-			newCell = !GameObject.Find(mazeFloor + "/MazeCell/Stairs2") ? Instantiate(cellPrefabs[Random.Range(0, cellPrefabs.Length)]) as MazeCell : Instantiate (cellPrefabs [Random.Range(0, cellPrefabs.Length - 1)]) as MazeCell;
+			if(GameObject.Find(transform.name + "/MazeCell/Stairs2") != false)
+			{
+				newCell = Instantiate(cellPrefabs[Random.Range(0, cellPrefabs.Length - 1)]) as MazeCell;
+			}
+			else
+			{
+				newCell = Instantiate(cellPrefabs[cellPrefabs.Length - 1]) as MazeCell;
+			}
+			//newCell = !GameObject.Find(transform.name + "/MazeCell/Stairs2") ? Instantiate(cellPrefabs[cellPrefabs.Length - 1]) as MazeCell : Instantiate (cellPrefabs [Random.Range(0, cellPrefabs.Length - 2)]) as MazeCell;
 		}
 
 
-		cells [coordinates.x, coordinates.z] = newCell;
+		cells[coordinates.x, coordinates.z] = newCell;
 		
 		newCell.coordinates = coordinates;
 		newCell.name = "MazeCell";
