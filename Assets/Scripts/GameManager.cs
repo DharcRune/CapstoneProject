@@ -10,21 +10,20 @@ public class GameManager : MonoBehaviour
 	public List<int> seeds;
 	public Timer timer;
 	private Maze mazeInstance;
-	private Maze mazeInstance2;
 	private Player playerInstance;
 	private IntVector2 playerStartingPosition;
 	private float sec;
 	private int seedIndex;
+	private int floorIndex;
 
 	void Start()
 	{
 		playerStartingPosition = new IntVector2(0, mazePrefab.size.x - 1);
 		seedIndex = 0;
+		floorIndex = 1;
 
 		mazeInstance = Instantiate(mazePrefab) as Maze;
-		mazeInstance.name = "maze1f";
-		mazeInstance2 = Instantiate(mazePrefab) as Maze;
-		mazeInstance2.name = "maze2f";
+		mazeInstance.name = "maze" + floorIndex + "f";
 		playerInstance = Instantiate(playerPrefab) as Player;
 
 		BeginGame();
@@ -44,10 +43,7 @@ public class GameManager : MonoBehaviour
 		if(seedIndex == seeds.Count)
 		{
 			seedIndex = 0;
-		}
-
-		mazeInstance2.Generate(10f, seeds[seedIndex], mazeInstance2.name);
-		Debug.Log(mazeInstance2.name + "'s seed: " + seedIndex);
+		}		
 
 		playerInstance.SetLocation(mazeInstance.GetCell(playerStartingPosition));
 
@@ -64,13 +60,12 @@ public class GameManager : MonoBehaviour
 		//seedIndex++;
 
 		Destroy (mazeInstance.gameObject);
-		Destroy (mazeInstance2.gameObject);
 		Destroy (playerInstance.gameObject);
 
+		floorIndex++;
 		mazeInstance = Instantiate(mazePrefab) as Maze;
-		mazeInstance.name = "maze1f";
-		mazeInstance2 = Instantiate(mazePrefab) as Maze;
-		mazeInstance2.name = "maze2f";
+		mazeInstance.name = "maze" + floorIndex + "f";
+
 		playerInstance = Instantiate(playerPrefab) as Player;
 
 		BeginGame();
