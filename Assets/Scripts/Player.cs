@@ -9,9 +9,11 @@ public class Player : MonoBehaviour
 	private MazeCell currentCell;
 	private MazeDirection currentDirection;
 	private Vector3 movement;
+	private bool allowKeyInput;
 
 	public void Start()
 	{
+		allowKeyInput = true;
 		distance = 1f;
 		cam = GetComponentInChildren<Camera>();
 	}
@@ -41,27 +43,35 @@ public class Player : MonoBehaviour
 
 	private void Update() 
 	{
-		if(Input.GetKey(KeyCode.W))
+		if(allowKeyInput) 
 		{
-			movement = transform.position + cam.transform.forward * distance * Time.deltaTime;
-			transform.position = new Vector3(movement.x, transform.position.y, movement.z);
-		}
-		else if(Input.GetKey(KeyCode.D))
-		{
-			movement = transform.position + cam.transform.right * distance * Time.deltaTime;
-			transform.position = new Vector3(movement.x, transform.position.y, movement.z);
-		}
-		else if(Input.GetKey(KeyCode.S))
-		{
-			movement = transform.position - cam.transform.forward * distance * Time.deltaTime;
-			transform.position = new Vector3(movement.x, transform.position.y, movement.z);
-		}
-		else if(Input.GetKey(KeyCode.A))
-		{
-			movement = transform.position - cam.transform.right * distance * Time.deltaTime;
-			transform.position = new Vector3(movement.x, transform.position.y, movement.z);
+			if(Input.GetKey (KeyCode.W)) 
+			{
+				movement = transform.position + cam.transform.forward * distance * Time.deltaTime;
+				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
+			} 
+			else if(Input.GetKey (KeyCode.D)) 
+			{
+				movement = transform.position + cam.transform.right * distance * Time.deltaTime;
+				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
+			} 
+			else if(Input.GetKey (KeyCode.S)) 
+			{
+				movement = transform.position - cam.transform.forward * distance * Time.deltaTime;
+				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
+			} 
+			else if(Input.GetKey (KeyCode.A)) 
+			{
+				movement = transform.position - cam.transform.right * distance * Time.deltaTime;
+				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
+			}
 		}
 
 		Rotate();
+	}
+
+	public void toggleKeyInput()
+	{
+		allowKeyInput = !allowKeyInput;
 	}
 }
