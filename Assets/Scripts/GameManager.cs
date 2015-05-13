@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 	public CameraMovement cameraPrefab;
 	public List<int> seeds;
 	public Timer timer;
+	public CurrentFloor currFloor;
 	private Maze mazeInstance;
 	private Player playerInstance;
 	private IntVector2 playerStartingPosition;
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
 		playerStartingPosition = new IntVector2(0, mazePrefab.size.x - 1);
 		seedIndex = 0;
 		floorIndex = 1;
+		currFloor.setFloor (floorIndex);
 
 		mazeInstance = Instantiate(mazePrefab) as Maze;
 		mazeInstance.name = "maze" + floorIndex + "f";
@@ -31,19 +33,13 @@ public class GameManager : MonoBehaviour
 
 	void Update()
 	{	
-		InvokeRepeating("RestartGame", 60.0f, 10.0f);
+
 	}
 
 	private void BeginGame()
 	{	
 		mazeInstance.Generate(0f, seeds[seedIndex], mazeInstance.name);
 		Debug.Log(mazeInstance.name + "'s seed: " + seedIndex);
-
-		seedIndex++;
-		if(seedIndex == seeds.Count)
-		{
-			seedIndex = 0;
-		}		
 
 		playerInstance.SetLocation(mazeInstance.GetCell(playerStartingPosition));
 
@@ -52,22 +48,47 @@ public class GameManager : MonoBehaviour
 		cameraPrefab.startCamera();
 	}
 
-	private void RestartGame()
+	public void RestartGame()
 	{
-		Debug.Log("Its been 10 seconds!");
-		CancelInvoke();
+		GameObject.Destroy(mazeInstance.gameObject);
+		GameObject.Destroy(playerInstance.gameObject);
 
-		//seedIndex++;
-
-		Destroy (mazeInstance.gameObject);
-		Destroy (playerInstance.gameObject);
-
-		floorIndex++;
+		//floorIndex++;
+		currFloor.setFloor(floorIndex);
 		mazeInstance = Instantiate(mazePrefab) as Maze;
 		mazeInstance.name = "maze" + floorIndex + "f";
 
 		playerInstance = Instantiate(playerPrefab) as Player;
 
 		BeginGame();
+	}
+
+	public void lowerFloorIndexByOne()
+	{
+		floorIndex--;
+	}
+
+	public void increaseFloorIndexByOne()
+	{
+		floorIndex++;
+	}
+
+	public void lowerSeedIndexByOne()
+	{
+		seedIndex--;
+		if(seedIndex < 0)
+		{
+			seedIndex = seeds.Count - 1;
+		}	
+
+	}
+
+	public void increaseSeedIndexByOne()
+	{
+		seedIndex++;
+		if(seedIndex == seeds.Count)
+		{
+			seedIndex = 0;
+		}	
 	}
 }

@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
 	public float currentHealth;                                   // The current health the player has.
 	public Slider healthSlider;                                 // Reference to the UI's health bar.
 	public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
+	public Text healthText;
 	//public AudioClip deathClip;                                 // The audio clip to play when the player dies.
 	public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
 	public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
@@ -29,11 +30,15 @@ public class PlayerHealth : MonoBehaviour
 		//playerMovement = GetComponent <PlayerMovement> ();
 		//playerShooting = GetComponentInChildren <PlayerShooting> ();
 
+		//HealthText
 		healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+		healthText = GameObject.Find("HealthText").GetComponent<Text>();
 		damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
 
 		// Set the initial health of the player.
 		currentHealth = startingHealth;
+		healthSlider.value = startingHealth;
+		healthText.text = "" + (int)startingHealth;
 	}
 	
 	
@@ -67,6 +72,7 @@ public class PlayerHealth : MonoBehaviour
 		
 		// Set the health bar's value to the current health.
 		healthSlider.value = currentHealth;
+		healthText.text = "" + (int)currentHealth;
 		
 		// Play the hurt sound effect.
 		//playerAudio.Play ();

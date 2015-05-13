@@ -14,17 +14,20 @@ public class DamagingTraps : MonoBehaviour
 	float timer;                                // Timer for counting up to the next attack.
 	
 	
-	void Awake()
+	void Start()
 	{
 		// Setting up the references.
 		player = GameObject.Find("Player(Clone)").gameObject;
 		playerHealth = player.GetComponent <PlayerHealth>();
+		timer = 0f;
 		//anim = GetComponent <Animator> ();
 	}
 	
 	
 	void OnTriggerEnter(Collider other)
 	{
+		Debug.Log("Entered damaging trap collision.");
+
 		// If the entering collider is the player...
 		if(other.gameObject == player)
 		{
@@ -68,6 +71,7 @@ public class DamagingTraps : MonoBehaviour
 	
 	void Attack ()
 	{
+		Debug.Log("Trap Attacking");
 		// Reset the timer.
 		timer = 0f;
 		

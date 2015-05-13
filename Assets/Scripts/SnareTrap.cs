@@ -15,12 +15,13 @@ public class SnareTrap : MonoBehaviour
 	float timer;                                // Timer for counting up to the next attack.
 	
 	
-	void Awake()
+	void Start()
 	{
 		// Setting up the references.
 		playerGameObject = GameObject.Find("Player(Clone)").gameObject;
 		player = playerGameObject.GetComponent<Player>();
 		playerHealth = playerGameObject.GetComponent<PlayerHealth>();
+		timer = 0f;
 		//anim = GetComponent <Animator> ();
 	}
 	
@@ -70,6 +71,8 @@ public class SnareTrap : MonoBehaviour
 	
 	void Snare ()
 	{
+		Debug.Log("Snaring");
+
 		// Reset the timer.
 		timer = 0f;
 		
