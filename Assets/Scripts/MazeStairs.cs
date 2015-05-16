@@ -14,7 +14,12 @@ public class MazeStairs : MonoBehaviour
 	{
 		fm.increaseFloorIndexByOne();
 		fm.increaseSeedIndexByOne();
-		fm.resetChangeFloorIndex ();
-		Application.LoadLevel(0);
+
+		if(fm.changeFloorIndex >= fm.maxFloorChanges)
+		{
+			fm.increaseChangeFloorIndexByOne();
+		}
+
+		Application.LoadLevel("LoadingUpperFloor");
 	}
 }

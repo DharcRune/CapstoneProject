@@ -24,6 +24,11 @@ public class Player : MonoBehaviour
 		transform.localPosition = new Vector3(cell.transform.localPosition.x, 0.5f, cell.transform.localPosition.z);
 	}
 
+	public void SetLocation(IntVector2 position)
+	{
+		transform.localPosition = new Vector3(position.x, 0.5f, position.z);
+	}
+
 	private void Move(MazeDirection direction)
 	{
 		MazeCellEdge edge = currentCell.GetEdge(direction);

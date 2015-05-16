@@ -10,6 +10,7 @@ public class Maze : MonoBehaviour
 	public MazeWall wallPrefab;
 	public MazeDoor doorPrefab;
 	public MazeRoomSettings[] roomSettings;
+	private Player player;
 	private FloorManager fm;
 	private MazeCell[,] cells;
 	private List<MazeRoom> rooms = new List<MazeRoom>();
@@ -23,6 +24,7 @@ public class Maze : MonoBehaviour
 		timeToWait = 20f;
 
 		fm = GameObject.Find ("FloorManager").GetComponent<FloorManager>();
+		player = GameObject.Find("Player(Clone)").GetComponent<Player>();
 	}
 
 	void Update()
@@ -33,13 +35,10 @@ public class Maze : MonoBehaviour
 		{
 			fm.increaseChangeFloorIndexByOne();
 			fm.increaseSeedIndexByOne();
-			ChangeScene(4);
+			fm.savePlayerPosition(player.transform.position.x, player.transform.position.z);
+
+			Application.LoadLevel("LoadingNewMaze");
 		}
-	}
-	
-	void ChangeScene(int sceneNumber)
-	{
-		Application.LoadLevel(sceneNumber);
 	}
 
 	[Range(0f, 1f)]

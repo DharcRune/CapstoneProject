@@ -5,10 +5,12 @@ public class LoadMaze : MonoBehaviour
 {
 	public float timeToWait;
 	private float timer;
+	private FloorManager fm;
 
 	void Start() 
 	{
 		timer = 0f;
+		fm = GameObject.Find("FloorManager").GetComponent<FloorManager>();
 	}
 
 	void Update()
@@ -17,12 +19,14 @@ public class LoadMaze : MonoBehaviour
 
 		if(timer >= timeToWait)
 		{
-			ChangeScene(1);
-		}
-	}
+			Debug.Log("Changed: " + fm.changeFloorIndex + " times.");
 
-	void ChangeScene(int sceneNumber)
-	{
-		Application.LoadLevel(sceneNumber);
+			if(fm.changeFloorIndex > fm.maxFloorChanges)
+			{
+				fm.resetChangeFloorIndex();
+			}
+
+			Application.LoadLevel("MazeGeneration");
+		}
 	}
 }

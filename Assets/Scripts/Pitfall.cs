@@ -14,7 +14,12 @@ public class Pitfall : MonoBehaviour
 	{
 		fm.lowerFloorIndexByOne();
 		fm.lowerSeedIndexByOne();
-		fm.resetChangeFloorIndex ();
-		Application.LoadLevel(3);
+
+		if(fm.changeFloorIndex >= fm.maxFloorChanges)
+		{
+			fm.increaseChangeFloorIndexByOne();
+		}
+
+		Application.LoadLevel("LoadingLowerFloor");
 	}
 }

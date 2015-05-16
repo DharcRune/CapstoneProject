@@ -7,6 +7,7 @@ public class FloorManager : MonoBehaviour
 	public int floorIndex;
 	public int changeFloorIndex;
 	public int maxFloorChanges;
+	public IntVector2 playerPosition;
 	private int maxSeedIndex;
 	private GameManager gm;
 
@@ -22,6 +23,7 @@ public class FloorManager : MonoBehaviour
 		maxSeedIndex = 0;
 		changeFloorIndex = 1;
 		maxFloorChanges = 4;
+		playerPosition = new IntVector2(-9, 9);
 	}
 
 	void OnLevelWasLoaded(int level) 
@@ -38,6 +40,10 @@ public class FloorManager : MonoBehaviour
 		Application.LoadLevel(1);
 	}	
 
+	public void savePlayerPosition(float xPosition, float zPosition)
+	{
+		playerPosition = new IntVector2((int)xPosition, (int)zPosition);
+	}
 	
 	public void lowerFloorIndexByOne()
 	{
@@ -61,7 +67,6 @@ public class FloorManager : MonoBehaviour
 		{
 			seedIndex = maxSeedIndex - 1;
 		}	
-		
 	}
 	
 	public void increaseSeedIndexByOne()
