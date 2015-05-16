@@ -17,11 +17,16 @@ public class GameManager : MonoBehaviour
 	private int seedIndex;
 	private int floorIndex;
 
+	void Awake()
+	{
+		FloorManager fm = GameObject.Find ("FloorManager").GetComponent<FloorManager>();
+		floorIndex = fm.floorIndex;
+		seedIndex = fm.seedIndex;
+	}
+
 	void Start()
 	{
 		playerStartingPosition = new IntVector2(0, mazePrefab.size.x - 1);
-		seedIndex = 0;
-		floorIndex = 1;
 		currFloor.setFloor (floorIndex);
 
 		mazeInstance = Instantiate(mazePrefab) as Maze;
@@ -31,64 +36,15 @@ public class GameManager : MonoBehaviour
 		BeginGame();
 	}
 
-	void Update()
-	{	
-
-	}
-
 	private void BeginGame()
 	{	
 		mazeInstance.Generate(0f, seeds[seedIndex], mazeInstance.name);
-		Debug.Log(mazeInstance.name + "'s seed: " + seedIndex);
+		Debug.Log(mazeInstance.name + "'s seed: " + seeds[seedIndex]);
 
 		playerInstance.SetLocation(mazeInstance.GetCell(playerStartingPosition));
 
 		Camera.main.clearFlags = CameraClearFlags.Depth;
 		Camera.main.rect = new Rect(0.81f, 0.67f, 0.35f, 0.35f);
 		cameraPrefab.startCamera();
-	}
-
-	public void RestartGame()
-	{
-		GameObject.Destroy(mazeInstance.gameObject);
-		GameObject.Destroy(playerInstance.gameObject);
-
-		//floorIndex++;
-		currFloor.setFloor(floorIndex);
-		mazeInstance = Instantiate(mazePrefab) as Maze;
-		mazeInstance.name = "maze" + floorIndex + "f";
-
-		playerInstance = Instantiate(playerPrefab) as Player;
-
-		BeginGame();
-	}
-
-	public void lowerFloorIndexByOne()
-	{
-		floorIndex--;
-	}
-
-	public void increaseFloorIndexByOne()
-	{
-		floorIndex++;
-	}
-
-	public void lowerSeedIndexByOne()
-	{
-		seedIndex--;
-		if(seedIndex < 0)
-		{
-			seedIndex = seeds.Count - 1;
-		}	
-
-	}
-
-	public void increaseSeedIndexByOne()
-	{
-		seedIndex++;
-		if(seedIndex == seeds.Count)
-		{
-			seedIndex = 0;
-		}	
 	}
 }

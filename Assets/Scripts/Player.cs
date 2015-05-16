@@ -37,8 +37,6 @@ public class Player : MonoBehaviour
 	private void Rotate()
 	{
 		transform.rotation = Quaternion.Euler(0, Input.mousePosition.x, 0);
-		//transform.localRotation = direction.ToRotation();
-		//currentDirection = direction;
 	}
 
 	private void Update() 

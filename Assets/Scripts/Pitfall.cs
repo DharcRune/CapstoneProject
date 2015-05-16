@@ -3,18 +3,18 @@ using System.Collections;
 
 public class Pitfall : MonoBehaviour
 {
-	public GameManager gm;
+	public FloorManager fm;
 	
 	public void Start()
 	{
-		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+		fm = GameObject.Find("FloorManager").GetComponent<FloorManager>();
 	}
 	
 	void OnTriggerEnter(Collider collider)
 	{
-		Debug.Log("Player fell through a pitfall!");
-		gm.lowerFloorIndexByOne();
-		gm.lowerSeedIndexByOne();
-		gm.RestartGame();
+		fm.lowerFloorIndexByOne();
+		fm.lowerSeedIndexByOne();
+		fm.resetChangeFloorIndex ();
+		Application.LoadLevel(3);
 	}
 }

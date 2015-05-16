@@ -10,9 +10,37 @@ public class Maze : MonoBehaviour
 	public MazeWall wallPrefab;
 	public MazeDoor doorPrefab;
 	public MazeRoomSettings[] roomSettings;
+	private FloorManager fm;
 	private MazeCell[,] cells;
 	private List<MazeRoom> rooms = new List<MazeRoom>();
 	private int seedValue;
+	private float timeToWait;
+	private float timer;
+
+	void Start()
+	{
+		timer = 0f;
+		timeToWait = 20f;
+
+		fm = GameObject.Find ("FloorManager").GetComponent<FloorManager>();
+	}
+
+	void Update()
+	{
+		timer += Time.deltaTime;
+		
+		if(timer >= timeToWait && fm.changeFloorIndex < fm.maxFloorChanges)
+		{
+			fm.increaseChangeFloorIndexByOne();
+			fm.increaseSeedIndexByOne();
+			ChangeScene(4);
+		}
+	}
+	
+	void ChangeScene(int sceneNumber)
+	{
+		Application.LoadLevel(sceneNumber);
+	}
 
 	[Range(0f, 1f)]
 	public float doorProbability;
@@ -149,7 +177,6 @@ public class Maze : MonoBehaviour
 			{
 				newCell = Instantiate(cellPrefabs[cellPrefabs.Length - 1]) as MazeCell;
 			}
-			//newCell = !GameObject.Find(transform.name + "/MazeCell/Stairs2") ? Instantiate(cellPrefabs[cellPrefabs.Length - 1]) as MazeCell : Instantiate (cellPrefabs [Random.Range(0, cellPrefabs.Length - 2)]) as MazeCell;
 		}
 
 

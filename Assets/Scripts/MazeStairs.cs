@@ -3,18 +3,18 @@ using System.Collections;
 
 public class MazeStairs : MonoBehaviour
 {
-	public GameManager gm;
+	public FloorManager fm;
 	
 	public void Start()
 	{
-		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+		fm = GameObject.Find("FloorManager").GetComponent<FloorManager>();
 	}
 
 	void OnTriggerEnter(Collider collider)
 	{
-		Debug.Log("Player is on the stairs.");
-		gm.increaseFloorIndexByOne();
-		gm.increaseSeedIndexByOne ();
+		fm.increaseFloorIndexByOne();
+		fm.increaseSeedIndexByOne();
+		fm.resetChangeFloorIndex ();
 		Application.LoadLevel(0);
 	}
 }
