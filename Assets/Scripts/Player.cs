@@ -10,12 +10,14 @@ public class Player : MonoBehaviour
 	private MazeDirection currentDirection;
 	private Vector3 movement;
 	private bool allowKeyInput;
+	private AudioSource walkingAudio;
 
 	public void Start()
 	{
 		allowKeyInput = true;
 		distance = 1f;
 		cam = GetComponentInChildren<Camera>();
+		walkingAudio = GetComponent<AudioSource>();
 	}
 
 	public void SetLocation(MazeCell cell)
@@ -48,26 +50,68 @@ public class Player : MonoBehaviour
 	{
 		if(allowKeyInput) 
 		{
-			if(Input.GetKey (KeyCode.W)) 
+			if(Input.GetKey(KeyCode.W)) 
 			{
+				if(Input.GetKeyDown(KeyCode.W))
+				{
+					walkingAudio.Play();
+				}
+
 				movement = transform.position + cam.transform.forward * distance * Time.deltaTime;
 				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
 			} 
-			else if(Input.GetKey (KeyCode.D)) 
+			else if(Input.GetKeyUp(KeyCode.W))
 			{
+				walkingAudio.Stop();
+			}
+
+			else if(Input.GetKey(KeyCode.D)) 
+			{
+				if(Input.GetKeyDown(KeyCode.D))
+				{
+					walkingAudio.Play();
+				}
+
 				movement = transform.position + cam.transform.right * distance * Time.deltaTime;
 				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
 			} 
-			else if(Input.GetKey (KeyCode.S)) 
+			else if(Input.GetKeyUp(KeyCode.D))
 			{
+				walkingAudio.Stop();
+			}
+
+
+			else if(Input.GetKey(KeyCode.S)) 
+			{
+				if(Input.GetKeyDown(KeyCode.S))
+				{
+					walkingAudio.Play();
+				}
+
 				movement = transform.position - cam.transform.forward * distance * Time.deltaTime;
 				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
-			} 
-			else if(Input.GetKey (KeyCode.A)) 
+			}
+			else if(Input.GetKeyUp(KeyCode.S))
 			{
+				walkingAudio.Stop();
+			}
+
+
+			else if(Input.GetKey(KeyCode.A)) 
+			{
+				if(Input.GetKeyDown(KeyCode.A))
+				{
+					walkingAudio.Play();
+				}
+
 				movement = transform.position - cam.transform.right * distance * Time.deltaTime;
 				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
 			}
+			else if(Input.GetKeyUp(KeyCode.A))
+			{
+				walkingAudio.Stop();
+			}
+
 		}
 
 		Rotate();

@@ -7,7 +7,7 @@ public class Maze : MonoBehaviour
 	public MazeCell[] cellPrefabs;
 	public IntVector2 size;
 	public MazePassage passagePrefab;
-	public MazeWall wallPrefab;
+	public MazeWall[] wallPrefabs;
 	public MazeDoor doorPrefab;
 	public MazeRoomSettings[] roomSettings;
 	private Player player;
@@ -17,6 +17,7 @@ public class Maze : MonoBehaviour
 	private int seedValue;
 	private float timeToWait;
 	private float timer;
+	private AudioSource windAudio;
 
 	void Start()
 	{
@@ -25,12 +26,14 @@ public class Maze : MonoBehaviour
 
 		fm = GameObject.Find ("FloorManager").GetComponent<FloorManager>();
 		player = GameObject.Find("Player(Clone)").GetComponent<Player>();
+		windAudio = GetComponent<AudioSource>();
+		windAudio.Play();
 	}
 
 	void Update()
 	{
 		timer += Time.deltaTime;
-		
+
 		if(timer >= timeToWait && fm.changeFloorIndex < fm.maxFloorChanges)
 		{
 			fm.increaseChangeFloorIndexByOne();
@@ -141,12 +144,12 @@ public class Maze : MonoBehaviour
 
 	private void CreateWall(MazeCell cell, MazeCell otherCell, MazeDirection direction)
 	{
-		MazeWall wall = Instantiate (wallPrefab) as MazeWall;
+		MazeWall wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length - 1)]) as MazeWall;
 		wall.Initialize(cell, otherCell, direction);
 
 		if(otherCell != null)
 		{
-			wall = Instantiate(wallPrefab) as MazeWall;
+			wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length - 1)]) as MazeWall;
 			wall.Initialize(otherCell, cell, direction.GetOpposite());
 		}
 	}
