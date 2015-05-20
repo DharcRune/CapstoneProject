@@ -4,13 +4,15 @@ using System.Collections;
 
 public class Player : MonoBehaviour 
 {
+	public AudioClip[] walkingClip;
 	private Camera cam;
 	private float distance;
 	private MazeCell currentCell;
 	private MazeDirection currentDirection;
 	private Vector3 movement;
 	private bool allowKeyInput;
-	private AudioSource walkingAudio;
+	public AudioSource walkingAudio;
+	public FloorManager fm;
 
 	public void Start()
 	{
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
 		distance = 1f;
 		cam = GetComponentInChildren<Camera>();
 		walkingAudio = GetComponent<AudioSource>();
+		fm = GameObject.Find ("FloorManager").GetComponent<FloorManager>();
 	}
 
 	public void SetLocation(MazeCell cell)
@@ -45,73 +48,78 @@ public class Player : MonoBehaviour
 	{
 		transform.rotation = Quaternion.Euler(0, Input.mousePosition.x, 0);
 	}
-
+	
 	private void Update() 
 	{
 		if(allowKeyInput) 
 		{
-			if(Input.GetKey(KeyCode.W)) 
+			if(Input.GetKey (KeyCode.W)) 
 			{
-				if(Input.GetKeyDown(KeyCode.W))
+				if(Input.GetKeyDown(KeyCode.W)) 
 				{
+					walkingAudio.clip = walkingClip[fm.startingRoomType];
 					walkingAudio.Play();
 				}
 
 				movement = transform.position + cam.transform.forward * distance * Time.deltaTime;
 				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
 			} 
-			else if(Input.GetKeyUp(KeyCode.W))
+			else if (Input.GetKeyUp (KeyCode.W)) 
 			{
-				walkingAudio.Stop();
-			}
+				walkingAudio.Stop ();
+			} 
 
-			else if(Input.GetKey(KeyCode.D)) 
+			else if (Input.GetKey (KeyCode.D)) 
 			{
-				if(Input.GetKeyDown(KeyCode.D))
+				if (Input.GetKeyDown (KeyCode.D)) 
 				{
-					walkingAudio.Play();
+					walkingAudio.clip = walkingClip[fm.startingRoomType];
+					walkingAudio.Play ();
 				}
 
 				movement = transform.position + cam.transform.right * distance * Time.deltaTime;
 				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
 			} 
-			else if(Input.GetKeyUp(KeyCode.D))
+			else if (Input.GetKeyUp (KeyCode.D)) 
 			{
-				walkingAudio.Stop();
-			}
+				walkingAudio.Stop ();
+			} 
 
-
-			else if(Input.GetKey(KeyCode.S)) 
+			else if (Input.GetKey (KeyCode.S)) 
 			{
-				if(Input.GetKeyDown(KeyCode.S))
+				if (Input.GetKeyDown (KeyCode.S)) 
 				{
-					walkingAudio.Play();
+					walkingAudio.clip = walkingClip[fm.startingRoomType];
+					walkingAudio.Play ();
 				}
 
 				movement = transform.position - cam.transform.forward * distance * Time.deltaTime;
 				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
-			}
-			else if(Input.GetKeyUp(KeyCode.S))
+			} 
+			else if (Input.GetKeyUp (KeyCode.S)) 
 			{
-				walkingAudio.Stop();
-			}
+				walkingAudio.Stop ();
+			} 
 
-
-			else if(Input.GetKey(KeyCode.A)) 
+			else if (Input.GetKey (KeyCode.A))
 			{
-				if(Input.GetKeyDown(KeyCode.A))
+				if (Input.GetKeyDown (KeyCode.A))
 				{
-					walkingAudio.Play();
+					walkingAudio.clip = walkingClip[fm.startingRoomType];
+					walkingAudio.Play ();
 				}
 
 				movement = transform.position - cam.transform.right * distance * Time.deltaTime;
 				transform.position = new Vector3 (movement.x, transform.position.y, movement.z);
-			}
-			else if(Input.GetKeyUp(KeyCode.A))
+			} 
+			else if (Input.GetKeyUp (KeyCode.A)) 
 			{
-				walkingAudio.Stop();
+				walkingAudio.Stop ();
 			}
-
+		} 
+		else
+		{
+			walkingAudio.Stop();
 		}
 
 		Rotate();

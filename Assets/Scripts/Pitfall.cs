@@ -14,6 +14,7 @@ public class Pitfall : MonoBehaviour
 	{
 		fm.lowerFloorIndexByOne();
 		fm.lowerSeedIndexByOne();
+		fm.lowerStartingRoomTypeByOne();
 
 		if(fm.changeFloorIndex >= fm.maxFloorChanges)
 		{

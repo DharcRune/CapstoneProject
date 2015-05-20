@@ -14,6 +14,7 @@ public class MazeStairs : MonoBehaviour
 	{
 		fm.increaseFloorIndexByOne();
 		fm.increaseSeedIndexByOne();
+		fm.increaseStartingRoomTypeByOne();
 
 		if(fm.changeFloorIndex >= fm.maxFloorChanges)
 		{

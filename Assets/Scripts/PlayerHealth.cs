@@ -10,20 +10,21 @@ public class PlayerHealth : MonoBehaviour
 	public Image damageImage;  
 	public Text healthText;
 	//public AudioClip deathClip;
+	public AudioClip hurtClip;
 	public float flashSpeed = 5f;                               
 	public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
 	
 	
 	//Animator anim;
-	//AudioSource playerAudio;
+	//AudioSource deathAudio;
+	AudioSource hurtAudio;
 	bool isDead;
 	bool damaged;
 	
 	
 	void Start()
 	{
-		//splayerAudio = GetComponent <AudioSource>();
-
+		hurtAudio = GetComponent<AudioSource>();
 		healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
 		healthText = GameObject.Find("HealthText").GetComponent<Text>();
 		damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
@@ -56,7 +57,8 @@ public class PlayerHealth : MonoBehaviour
 		healthSlider.value = currentHealth;
 		healthText.text = "" + (int)currentHealth;
 
-		//playerAudio.Play ();
+		hurtAudio.clip = hurtClip;
+		hurtAudio.Play ();
 
 		if(currentHealth <= 0 && !isDead)
 		{

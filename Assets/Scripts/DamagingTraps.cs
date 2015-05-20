@@ -5,8 +5,10 @@ public class DamagingTraps : MonoBehaviour
 {
 	public float timeBetweenAttacks = 0.5f;
 	public float attackDamage = 10;
+	private AudioSource trapSetOff;
 
 	GameObject player;
+	Player playerInstance;
 	PlayerHealth playerHealth;
 	bool playerInRange;
 	float timer;
@@ -15,7 +17,9 @@ public class DamagingTraps : MonoBehaviour
 	void Start()
 	{
 		player = GameObject.Find("Player(Clone)").gameObject;
+		playerInstance = GameObject.Find ("Player(Clone)").GetComponent<Player>();
 		playerHealth = player.GetComponent <PlayerHealth>();
+		trapSetOff = GetComponent<AudioSource>();
 		timer = 0f;
 	}
 	
@@ -44,7 +48,10 @@ public class DamagingTraps : MonoBehaviour
 		
 		if(timer >= timeBetweenAttacks && playerInRange)
 		{
-			Attack ();
+			trapSetOff.Play();
+			Attack();
+			playerInstance.walkingAudio.clip = playerInstance.walkingClip[playerInstance.fm.startingRoomType];
+			playerInstance.walkingAudio.Play();
 		}
 		
 		//if(playerHealth.currentHealth <= 0)

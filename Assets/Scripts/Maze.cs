@@ -10,6 +10,8 @@ public class Maze : MonoBehaviour
 	public MazeWall[] wallPrefabs;
 	public MazeDoor doorPrefab;
 	public MazeRoomSettings[] roomSettings;
+	public AudioClip[] floorAudio;
+
 	private Player player;
 	private FloorManager fm;
 	private MazeCell[,] cells;
@@ -17,7 +19,7 @@ public class Maze : MonoBehaviour
 	private int seedValue;
 	private float timeToWait;
 	private float timer;
-	private AudioSource windAudio;
+	private AudioSource sourceOfAudio;
 
 	void Start()
 	{
@@ -26,8 +28,10 @@ public class Maze : MonoBehaviour
 
 		fm = GameObject.Find ("FloorManager").GetComponent<FloorManager>();
 		player = GameObject.Find("Player(Clone)").GetComponent<Player>();
-		windAudio = GetComponent<AudioSource>();
-		windAudio.Play();
+
+		sourceOfAudio = GetComponent<AudioSource>();
+		sourceOfAudio.clip = floorAudio[fm.startingRoomType];
+		sourceOfAudio.Play();
 	}
 
 	void Update()

@@ -7,8 +7,10 @@ public class FloorManager : MonoBehaviour
 	public int floorIndex;
 	public int changeFloorIndex;
 	public int maxFloorChanges;
+	public int startingRoomType;
 	public IntVector2 playerPosition;
 	private int maxSeedIndex;
+	private int maxRooms;
 	private GameManager gm;
 
 	void Awake() 
@@ -23,6 +25,8 @@ public class FloorManager : MonoBehaviour
 		maxSeedIndex = 0;
 		changeFloorIndex = 1;
 		maxFloorChanges = 4;
+		startingRoomType = 0;
+		maxRooms = 2;
 		playerPosition = new IntVector2(-9, 9);
 	}
 
@@ -75,6 +79,24 @@ public class FloorManager : MonoBehaviour
 		if(seedIndex == maxSeedIndex)
 		{
 			seedIndex = 0;
+		}	
+	}
+
+	public void lowerStartingRoomTypeByOne()
+	{
+		startingRoomType--;
+		if(startingRoomType < 0)
+		{
+			startingRoomType = maxRooms - 1;
+		}	
+	}
+	
+	public void increaseStartingRoomTypeByOne()
+	{
+		startingRoomType++;
+		if(startingRoomType == maxRooms)
+		{
+			startingRoomType = 0;
 		}	
 	}
 

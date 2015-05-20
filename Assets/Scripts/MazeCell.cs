@@ -5,13 +5,22 @@ public class MazeCell : MonoBehaviour
 {
 	public IntVector2 coordinates;
 	public MazeRoom room;
+	public Material[] floorMaterial;
+	private FloorManager fm;
 	private int initializedEdgeCount;
 	private MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
+
+	void Awake()
+	{
+		fm = GameObject.Find ("FloorManager").GetComponent<FloorManager>();
+	}
 
 	public void Initialize(MazeRoom room)
 	{
 		room.Add(this);
-		transform.GetChild(0).GetComponent<Renderer>().material = room.settings.floorMaterial;
+		//transform.GetChild(0).GetComponent<Renderer>().material = room.settings.floorMaterial;
+
+		transform.GetChild(0).GetComponent<Renderer>().material = floorMaterial[fm.startingRoomType];
 	}
 
 	public bool IsFullyInitialized

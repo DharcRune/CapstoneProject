@@ -5,6 +5,7 @@ public class SnareTrap : MonoBehaviour
 {
 	public float timeBetweenAttacks = 6f;
 	public float attackDamage = 0;
+	private AudioSource trapSetOff;
 
 	GameObject playerGameObject; 
 	Player player;
@@ -16,6 +17,7 @@ public class SnareTrap : MonoBehaviour
 	{
 		playerGameObject = GameObject.Find("Player(Clone)").gameObject;
 		player = playerGameObject.GetComponent<Player>();
+		trapSetOff = GetComponent<AudioSource>();
 		timer = 0f;
 	}
 	
@@ -44,6 +46,7 @@ public class SnareTrap : MonoBehaviour
 		
 		if(timer >= timeBetweenAttacks && playerInRange)
 		{
+			trapSetOff.Play();
 			Snare();
 		}
 	}
