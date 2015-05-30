@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
 		mazeInstance.Generate(0f, seeds[seedIndex], mazeInstance.name);
 		Debug.Log(mazeInstance.name + "'s seed: " + seeds[seedIndex]);
 
-		//playerInstance.SetLocation(mazeInstance.GetCell(playerStartingPosition));
 		playerInstance.SetLocation (playerStartingPosition);
 
 		Camera.main.clearFlags = CameraClearFlags.Depth;

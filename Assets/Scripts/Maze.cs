@@ -8,6 +8,8 @@ public class Maze : MonoBehaviour
 	public IntVector2 size;
 	public MazePassage passagePrefab;
 	public MazeWall[] wallPrefabs;
+	public MazeWall[] wallWithPosters;
+	public MazeWall[] wallWithLights;
 	public MazeDoor doorPrefab;
 	public MazeRoomSettings[] roomSettings;
 	public AudioClip[] floorAudio;
@@ -21,12 +23,16 @@ public class Maze : MonoBehaviour
 	private float timer;
 	private AudioSource sourceOfAudio;
 
+	void Awake()
+	{
+		fm = GameObject.Find ("FloorManager").GetComponent<FloorManager>();
+	}
+
 	void Start()
 	{
 		timer = 0f;
-		timeToWait = 20f;
+		timeToWait = 90f;
 
-		fm = GameObject.Find ("FloorManager").GetComponent<FloorManager>();
 		player = GameObject.Find("Player(Clone)").GetComponent<Player>();
 
 		sourceOfAudio = GetComponent<AudioSource>();
@@ -58,6 +64,8 @@ public class Maze : MonoBehaviour
 
 	public void Generate(float heightOfCells, int seedVal, string mazeFloor)
 	{
+		setPosters(fm.startingRoomType, 2);
+		
 		cells = new MazeCell[size.x, size.z];
 
 		List<MazeCell> activeCells = new List<MazeCell>();
@@ -232,5 +240,17 @@ public class Maze : MonoBehaviour
 	public bool ContainsCoordinates(IntVector2 coordinate)
 	{
 		return coordinate.x >= 0 && coordinate.x < size.x && coordinate.z >= 0 && coordinate.z < size.z;
+	}
+
+	void setPosters(int floorNumber, int spacingInArray)
+	{
+		int wallSlot = 8;
+
+		for(int i = floorNumber; i <= wallWithPosters.Length - 1; i += spacingInArray)
+		{
+			wallPrefabs[wallSlot] = wallWithPosters[i];
+			Debug.Log(i);
+			wallSlot++;
+		}
 	}
 }

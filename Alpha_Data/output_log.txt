@@ -1,0 +1,52 @@
+Initialize engine version: 5.0.1f1 (5a2e8fe35a68)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA Quadro 2000M  (ID=0xdda)
+    Vendor:   NVIDIA
+    VRAM:     1983 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Dharc\Desktop\Capstone\Alpha_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Dharc\Desktop\Capstone\Alpha_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Dharc\Desktop\Capstone\Alpha_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Dharc\Desktop\Capstone\Alpha_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Dharc\Desktop\Capstone\Alpha_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Dharc\Desktop\Capstone\Alpha_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.064 seconds
+desktop: 1920x1080 50Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: C:\Users\Dharc\Desktop\Capstone\Alpha_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Dharc\Desktop\Capstone\Alpha_Data\Managed\System.dll (this message is harmless)
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: f00 -> priority: 1 
+  Thread -> id: 1488 -> priority: 1 
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.397575 ms
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 2987.
+Total: 1.342921 ms (FindLiveObjects: 0.186562 ms CreateObjectMapping: 0.239161 ms MarkObjects: 0.870351 ms  DeleteObjects: 0.045202 ms)
+
+0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+4
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+maze1f's seed: -1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 67.318680 ms
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 2996.
+Total: 8.179166 ms (FindLiveObjects: 5.804396 ms CreateObjectMapping: 0.280254 ms MarkObjects: 1.425518 ms  DeleteObjects: 0.668173 ms)
+

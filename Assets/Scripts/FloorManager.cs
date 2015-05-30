@@ -27,7 +27,7 @@ public class FloorManager : MonoBehaviour
 		maxFloorChanges = 4;
 		startingRoomType = 0;
 		maxRooms = 2;
-		playerPosition = new IntVector2(-9, 9);
+		playerPosition = new IntVector2(-4, 4);
 	}
 
 	void OnLevelWasLoaded(int level) 
@@ -41,8 +41,13 @@ public class FloorManager : MonoBehaviour
 
 	public void StartGame()
 	{
-		Application.LoadLevel(1);
-	}	
+		Application.LoadLevel("MazeGeneration");
+	}
+
+	public void QuitGame()
+	{
+		Application.Quit();
+	}
 
 	public void savePlayerPosition(float xPosition, float zPosition)
 	{

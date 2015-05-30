@@ -17,14 +17,12 @@ public class PlayerHealth : MonoBehaviour
 	
 	//Animator anim;
 	//AudioSource deathAudio;
-	AudioSource hurtAudio;
-	bool isDead;
+	public AudioSource hurtAudio;
 	bool damaged;
 	
 	
 	void Start()
 	{
-		hurtAudio = GetComponent<AudioSource>();
 		healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
 		healthText = GameObject.Find("HealthText").GetComponent<Text>();
 		damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
@@ -32,6 +30,7 @@ public class PlayerHealth : MonoBehaviour
 		currentHealth = startingHealth;
 		healthSlider.value = startingHealth;
 		healthText.text = "" + (int)startingHealth;
+		hurtAudio.clip = hurtClip;
 	}
 	
 	
@@ -57,10 +56,9 @@ public class PlayerHealth : MonoBehaviour
 		healthSlider.value = currentHealth;
 		healthText.text = "" + (int)currentHealth;
 
-		hurtAudio.clip = hurtClip;
-		hurtAudio.Play ();
+		hurtAudio.PlayDelayed(0.25f);
 
-		if(currentHealth <= 0 && !isDead)
+		if(currentHealth <= 0)
 		{
 			Death();
 		}
@@ -68,10 +66,7 @@ public class PlayerHealth : MonoBehaviour
 	
 	
 	void Death ()
-	{
-		isDead = true;
-		
-		//playerAudio.clip = deathClip;
-		//playerAudio.Play ();
+	{	
+		Application.LoadLevel("GameOverScene");
 	}       
 }
