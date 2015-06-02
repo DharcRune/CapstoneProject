@@ -26,7 +26,7 @@ public class FloorManager : MonoBehaviour
 		changeFloorIndex = 1;
 		maxFloorChanges = 4;
 		startingRoomType = 0;
-		maxRooms = 2;
+		maxRooms = 4;
 		playerPosition = new IntVector2(-4, 4);
 	}
 

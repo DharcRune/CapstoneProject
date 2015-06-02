@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		playerStartingPosition = fm.playerPosition;
-		currFloor.setFloor (floorIndex);
+		currFloor.setFloor(floorIndex);
 
 		mazeInstance = Instantiate(mazePrefab) as Maze;
 		mazeInstance.name = "maze" + floorIndex + "f";

@@ -31,7 +31,7 @@ public class Maze : MonoBehaviour
 	void Start()
 	{
 		timer = 0f;
-		timeToWait = 90f;
+		timeToWait = 45f;
 
 		player = GameObject.Find("Player(Clone)").GetComponent<Player>();
 
@@ -64,7 +64,8 @@ public class Maze : MonoBehaviour
 
 	public void Generate(float heightOfCells, int seedVal, string mazeFloor)
 	{
-		setPosters(fm.startingRoomType, 2);
+		setPosters(fm.startingRoomType, 4);
+		setLights(fm.startingRoomType);
 		
 		cells = new MazeCell[size.x, size.z];
 
@@ -251,6 +252,16 @@ public class Maze : MonoBehaviour
 			wallPrefabs[wallSlot] = wallWithPosters[i];
 			Debug.Log(i);
 			wallSlot++;
+		}
+	}
+
+	void setLights(int floorType)
+	{
+		int wallSlotMaxIndex = 5;
+
+		for(int wallIndex = 0; wallIndex <= wallSlotMaxIndex; wallIndex++)
+		{
+			wallPrefabs[wallIndex] = wallWithLights[floorType];
 		}
 	}
 }

@@ -18,7 +18,6 @@ public class MazeCell : MonoBehaviour
 	public void Initialize(MazeRoom room)
 	{
 		room.Add(this);
-
 		transform.GetChild(0).GetComponent<Renderer>().material = floorMaterial[fm.startingRoomType];
 	}
 
